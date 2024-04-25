@@ -10,6 +10,9 @@ import com.example.art.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -17,15 +20,30 @@ public class ProductServiceImpl implements ProductService {
     private final AssemblyUnitRepository assemblyUnitRepository;
     private final PartRepository partRepository;
 
-    public void saveProduct(Product product) {
-        productRepository.save(product);
+    @Override
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
     }
 
-    public void saveAssemblyUnit(AssemblyUnit assemblyUnit) {
-        assemblyUnitRepository.save(assemblyUnit);
+    @Override
+    public AssemblyUnit saveAssemblyUnit(AssemblyUnit assemblyUnit) {
+        return assemblyUnitRepository.save(assemblyUnit);
     }
 
-    public void savePart(Part part) {
-        partRepository.save(part);
+    @Override
+    public Part savePart(Part part) {
+        return partRepository.save(part);
+    }
+
+    @Override
+    public List<Product> getAll() {
+        return productRepository.findAll();
+    }
+
+    @Override
+    public Product getById(long id) {
+        Optional<Product> product = productRepository.findById(id);
+        if(product.isEmpty()) throw new RuntimeException("User with ID " + id + " not found");
+        return product.get();
     }
 }

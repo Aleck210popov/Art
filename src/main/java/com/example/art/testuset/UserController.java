@@ -1,7 +1,7 @@
-package com.example.art.controller;
+package com.example.art.testuset;
 
-import com.example.art.domain.User;
-import com.example.art.service.UserService;
+import com.example.art.testuset.User;
+import com.example.art.testuset.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

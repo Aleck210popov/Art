@@ -1,6 +1,4 @@
-package com.example.art.service;
-
-import com.example.art.domain.User;
+package com.example.art.testuset;
 
 import java.util.List;
 

@@ -1,8 +1,5 @@
-package com.example.art.service.iml;
+package com.example.art.testuset;
 
-import com.example.art.domain.User;
-import com.example.art.repository.UserRepository;
-import com.example.art.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

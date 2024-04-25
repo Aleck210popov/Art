@@ -5,27 +5,36 @@ import com.example.art.domain.Part;
 import com.example.art.domain.Product;
 import com.example.art.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/products")
-    public void addProduct(@RequestBody Product product) {
-        productService.saveProduct(product);
+    public Product addProduct(@RequestBody Product product) {
+        return productService.saveProduct(product);
     }
 
     @PostMapping("/assemblyUnits")
-    public void addAssemblyUnit(@RequestBody AssemblyUnit assemblyUnit) {
-        productService.saveAssemblyUnit(assemblyUnit);
+    public AssemblyUnit addAssemblyUnit(@RequestBody AssemblyUnit assemblyUnit) {
+        return productService.saveAssemblyUnit(assemblyUnit);
     }
 
     @PostMapping("/parts")
-    public void addPart(@RequestBody Part part) {
-        productService.savePart(part);
+    public Part addPart(@RequestBody Part part) {
+        return productService.savePart(part);
+    }
+    @GetMapping("/user")
+    public List<Product> getAllUsers() {
+        return productService.getAll();
+    }
+    @GetMapping("/user/{id}")
+    public Product getById(@PathVariable long id) {
+        return productService.getById(id);
     }
 }

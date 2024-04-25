@@ -1,7 +1,6 @@
-package com.example.art.repository;
+package com.example.art.testuset;
 
 
-import com.example.art.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
