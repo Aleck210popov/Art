@@ -1,4 +1,4 @@
-package com.example.art.service.iml;
+package com.example.art.service.impl;
 
 import com.example.art.domain.AssemblyUnit;
 import com.example.art.domain.Part;

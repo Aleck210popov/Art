@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -30,4 +31,7 @@ public class Product {
 
     @Column (name = "level")
     private int level;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<AssemblyUnit> assemblyUnits;
 }
