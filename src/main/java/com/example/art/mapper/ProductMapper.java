@@ -1,4 +1,4 @@
-package com.example.art.marrer;
+package com.example.art.mapper;
 
 import com.example.art.controller.dto.AssemblyUnitDto;
 import com.example.art.controller.dto.PartDto;
@@ -20,40 +20,44 @@ public class ProductMapper {
                 .name(productDto.getName())
                 .quantity(productDto.getQuantity())
                 .level(productDto.getLevel())
-                .assembliesUnits(toAssemblyUnit(productDto.getAssembliesUnitsDto()))
                 .build();
 
         if (productDto.getId() != null) product.setId(productDto.getId());
-
+        if (productDto.getAssembliesUnitsDto() != null) {
+            product.setAssembliesUnits(toAssemblyUnit(productDto.getAssembliesUnitsDto(), product));
+        }
         return product;
     }
 
-    private List<AssemblyUnit> toAssemblyUnit(List<AssemblyUnitDto> assembliesUnitsDto) {
-        List<AssemblyUnit> assemblyUnits = new ArrayList<>(assembliesUnitsDto.size());
+    private List<AssemblyUnit> toAssemblyUnit(List<AssemblyUnitDto> assembliesUnitsDto, Product product) {
+        List<AssemblyUnit> assemblyUnits = new ArrayList<>();
         for (AssemblyUnitDto assemblyUnitDto : assembliesUnitsDto) {
             AssemblyUnit assemblyUnit = AssemblyUnit.builder()
                     .designation(assemblyUnitDto.getDesignation())
                     .name(assemblyUnitDto.getName())
                     .quantity(assemblyUnitDto.getQuantity())
                     .level(assemblyUnitDto.getLevel())
-                    .parts(toParts(assemblyUnitDto.getPartsDto()))
+                    .product(product)
                     .build();
 
             if (assemblyUnitDto.getId() != null) assemblyUnit.setId(assemblyUnitDto.getId());
+            if (assemblyUnitDto.getPartsDto() != null)
+                assemblyUnit.setParts(toParts(assemblyUnitDto.getPartsDto(), assemblyUnit));
 
             assemblyUnits.add(assemblyUnit);
         }
         return assemblyUnits;
     }
 
-    private List<Part> toParts(List<PartDto> partsDto) {
-        List<Part> parts = new ArrayList<>(partsDto.size());
+    private List<Part> toParts(List<PartDto> partsDto, AssemblyUnit assemblyUnit) {
+        List<Part> parts = new ArrayList<>();
         for (PartDto partDto : partsDto) {
             Part part = Part.builder()
                     .designation(partDto.getDesignation())
                     .name(partDto.getName())
                     .quantity(partDto.getQuantity())
                     .level(partDto.getLevel())
+                    .assemblyUnit(assemblyUnit)
                     .build();
 
             if (partDto.getId() != null) part.setId(partDto.getId());
@@ -65,18 +69,23 @@ public class ProductMapper {
 
     public ProductDto toProductDto(Product product) {
 
-        return ProductDto.builder()
+         ProductDto productDto = ProductDto.builder()
                 .id(product.getId())
                 .designation(product.getDesignation())
                 .name(product.getName())
                 .quantity(product.getQuantity())
                 .level(product.getLevel())
-                .assembliesUnitsDto(toAssemblyUnitDto(product.getAssembliesUnits()))
                 .build();
+
+        if (product.getAssembliesUnits() != null)
+            productDto.setAssembliesUnitsDto(toAssemblyUnitDto(product.getAssembliesUnits()));
+
+        return productDto;
     }
 
+
     private List<AssemblyUnitDto> toAssemblyUnitDto(List<AssemblyUnit> assembliesUnits) {
-        List<AssemblyUnitDto> assembliesUnitsDto = new ArrayList<>(assembliesUnits.size());
+        List<AssemblyUnitDto> assembliesUnitsDto = new ArrayList<>();
         for (AssemblyUnit assemblyUnit : assembliesUnits) {
             AssemblyUnitDto assemblyUnitDto = AssemblyUnitDto.builder()
                     .id(assemblyUnit.getId())
@@ -84,16 +93,19 @@ public class ProductMapper {
                     .name(assemblyUnit.getName())
                     .quantity(assemblyUnit.getQuantity())
                     .level(assemblyUnit.getLevel())
-                    .partsDto(toPartsDto(assemblyUnit.getParts()))
                     .build();
 
+            if (assemblyUnit.getParts() != null)
+                assemblyUnitDto.setPartsDto(toPartsDto(assemblyUnit.getParts()));
+
             assembliesUnitsDto.add(assemblyUnitDto);
+
         }
         return assembliesUnitsDto;
     }
 
     private List<PartDto> toPartsDto(List<Part> parts) {
-        List<PartDto> partsDto = new ArrayList<>(parts.size());
+        List<PartDto> partsDto = new ArrayList<>();
         for (Part part : parts) {
             PartDto partDto = PartDto.builder()
                     .id(part.getId())

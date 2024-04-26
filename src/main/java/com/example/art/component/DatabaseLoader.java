@@ -4,6 +4,7 @@ import com.example.art.domain.AssemblyUnit;
 import com.example.art.domain.Part;
 import com.example.art.domain.Product;
 import com.example.art.service.ProductService;
+import com.example.art.service.StartProgramService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DatabaseLoader implements CommandLineRunner {
-    private final ProductService productService;
+    private final StartProgramService productService;
     @Override
     public void run(String... args) throws Exception {
         loadInitialData();
@@ -50,10 +51,26 @@ public class DatabaseLoader implements CommandLineRunner {
         housing.setLevel(2);
         housing.setProduct(product);
 
+        AssemblyUnit bolt = new AssemblyUnit();
+        bolt.setDesignation("ЖБИК.301131.001");
+        bolt.setName("Болт");
+        bolt.setQuantity(20);
+        bolt.setLevel(2);
+        bolt.setProduct(product);
+
+        AssemblyUnit rectangularSleeve = new AssemblyUnit();
+        rectangularSleeve.setDesignation("ЖБИК.757481.001");
+        rectangularSleeve.setName("Гильза прямоугольная");
+        rectangularSleeve.setQuantity(20);
+        rectangularSleeve.setLevel(2);
+        rectangularSleeve.setProduct(product);
+
         // Сохраняем сборочные единицы в базу данных
         productService.saveAssemblyUnit(stator);
         productService.saveAssemblyUnit(rotor);
         productService.saveAssemblyUnit(housing);
+        productService.saveAssemblyUnit(bolt);
+        productService.saveAssemblyUnit(rectangularSleeve);
 
         // Создаем детали
         Part statorHousing = new Part();

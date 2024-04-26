@@ -1,4 +1,4 @@
-package com.example.art.component.exception;
+package com.example.art.exception;
 
 public class ProductAlreadyExistsException extends RuntimeException {
     public ProductAlreadyExistsException(String message) {

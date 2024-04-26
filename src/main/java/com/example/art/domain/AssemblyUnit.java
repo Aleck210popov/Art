@@ -34,6 +34,6 @@ public class AssemblyUnit {
     @ManyToOne
     private Product product;
 
-    @OneToMany(mappedBy = "assemblyUnit")
+    @OneToMany(mappedBy = "assemblyUnit", cascade = CascadeType.ALL)
     private List<Part> parts;
 }
