@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface ProductService {
     ProductDto saveProduct(ProductDto productDto);
-    AssemblyUnit saveAssemblyUnit(AssemblyUnit assemblyUnit);
-    Part savePart(Part part);
-    List<Product> getAll();
-    Product getById(long id);
+    List<ProductDto> getAll();
+    ProductDto getById(long id);
+    ProductDto getByDesignation(String designation);
 }
