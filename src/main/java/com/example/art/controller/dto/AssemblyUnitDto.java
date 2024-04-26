@@ -1,11 +1,9 @@
 package com.example.art.controller.dto;
 
-import com.example.art.domain.AssemblyUnit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 import java.util.List;
 
@@ -13,8 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
-
+public class AssemblyUnitDto {
     private Long id;
 
     private String designation;
@@ -24,5 +21,5 @@ public class ProductDto {
     private int quantity;
 
     private int level;
-    private List<AssemblyUnitDto> assembliesUnitsDto;
+    private List<PartDto> partsDto;
 }

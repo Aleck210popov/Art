@@ -33,5 +33,5 @@ public class Product {
     private int level;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<AssemblyUnit> assemblyUnits;
+    private List<AssemblyUnit> assembliesUnits;
 }

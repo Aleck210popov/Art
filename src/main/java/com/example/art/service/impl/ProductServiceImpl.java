@@ -1,8 +1,11 @@
 package com.example.art.service.impl;
 
+import com.example.art.component.exception.ProductAlreadyExistsException;
+import com.example.art.controller.dto.ProductDto;
 import com.example.art.domain.AssemblyUnit;
 import com.example.art.domain.Part;
 import com.example.art.domain.Product;
+import com.example.art.marrer.ProductMapper;
 import com.example.art.repository.AssemblyUnitRepository;
 import com.example.art.repository.PartRepository;
 import com.example.art.repository.ProductRepository;
@@ -10,8 +13,10 @@ import com.example.art.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +26,13 @@ public class ProductServiceImpl implements ProductService {
     private final PartRepository partRepository;
 
     @Override
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public ProductDto saveProduct(ProductDto productDto) {
+        if (productRepository.findByDesignation(productDto.getDesignation()).isPresent())
+            throw new ProductAlreadyExistsException("Product already exists");
+
+        Product product = ProductMapper.toProductEntity(productDto);
+        Product productSave = productRepository.save(product);
+        return ProductMapper.toProductDto(productSave);
     }
 
     @Override

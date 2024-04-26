@@ -1,5 +1,6 @@
 package com.example.art.controller;
 
+import com.example.art.controller.dto.ProductDto;
 import com.example.art.domain.AssemblyUnit;
 import com.example.art.domain.Part;
 import com.example.art.domain.Product;
@@ -16,8 +17,8 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/products")
-    public Product addProduct(@RequestBody Product product) {
-        return productService.saveProduct(product);
+    public ProductDto addProduct(@RequestBody ProductDto productDto) {
+        return productService.saveProduct(productDto);
     }
 
     @PostMapping("/assemblyUnits")
