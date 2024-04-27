@@ -30,6 +30,9 @@ public class Part {
     @Column (name = "level")
     private int level;
 
+    @Column (name = "version_date")
+    private int versionDate;
+
     @ManyToOne
     private AssemblyUnit assemblyUnit;
 }

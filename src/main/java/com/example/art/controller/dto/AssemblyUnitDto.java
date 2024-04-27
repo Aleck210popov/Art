@@ -21,5 +21,8 @@ public class AssemblyUnitDto {
     private int quantity;
 
     private int level;
+
+    private int versionDate;
+
     private List<PartDto> partsDto;
 }

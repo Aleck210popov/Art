@@ -32,6 +32,9 @@ public class Product {
     @Column (name = "level")
     private int level;
 
+    @Column (name = "version_date")
+    private int versionDate;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<AssemblyUnit> assembliesUnits;
 }

@@ -33,6 +33,9 @@ public class AssemblyUnit {
     @Column (name = "level")
     private int level;
 
+    @Column (name = "version_date")
+    private int versionDate;
+
     @ManyToOne
     private Product product;
 

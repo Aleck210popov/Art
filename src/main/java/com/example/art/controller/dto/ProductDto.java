@@ -24,5 +24,8 @@ public class ProductDto {
     private int quantity;
 
     private int level;
+
+    private int versionDate;
+
     private List<AssemblyUnitDto> assembliesUnitsDto;
 }

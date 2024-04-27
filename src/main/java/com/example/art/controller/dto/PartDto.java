@@ -20,4 +20,6 @@ public class PartDto {
     private int quantity;
 
     private int level;
+
+    private int versionDate;
 }

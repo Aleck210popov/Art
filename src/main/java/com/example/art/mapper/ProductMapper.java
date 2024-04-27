@@ -20,6 +20,7 @@ public class ProductMapper {
                 .name(productDto.getName())
                 .quantity(productDto.getQuantity())
                 .level(productDto.getLevel())
+                .versionDate(productDto.getVersionDate())
                 .build();
 
         if (productDto.getId() != null) product.setId(productDto.getId());
@@ -37,6 +38,7 @@ public class ProductMapper {
                     .name(assemblyUnitDto.getName())
                     .quantity(assemblyUnitDto.getQuantity())
                     .level(assemblyUnitDto.getLevel())
+                    .versionDate(assemblyUnitDto.getVersionDate())
                     .product(product)
                     .build();
 
@@ -57,6 +59,7 @@ public class ProductMapper {
                     .name(partDto.getName())
                     .quantity(partDto.getQuantity())
                     .level(partDto.getLevel())
+                    .versionDate(partDto.getVersionDate())
                     .assemblyUnit(assemblyUnit)
                     .build();
 
@@ -75,6 +78,7 @@ public class ProductMapper {
                 .name(product.getName())
                 .quantity(product.getQuantity())
                 .level(product.getLevel())
+                 .versionDate(product.getVersionDate())
                 .build();
 
         if (product.getAssembliesUnits() != null)
@@ -93,6 +97,7 @@ public class ProductMapper {
                     .name(assemblyUnit.getName())
                     .quantity(assemblyUnit.getQuantity())
                     .level(assemblyUnit.getLevel())
+                    .versionDate(assemblyUnit.getVersionDate())
                     .build();
 
             if (assemblyUnit.getParts() != null)
@@ -113,6 +118,7 @@ public class ProductMapper {
                     .name(part.getName())
                     .quantity(part.getQuantity())
                     .level(part.getLevel())
+                    .versionDate(part.getVersionDate())
                     .build();
             partsDto.add(partDto);
         }

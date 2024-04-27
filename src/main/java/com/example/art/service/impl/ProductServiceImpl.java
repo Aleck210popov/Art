@@ -1,22 +1,16 @@
 package com.example.art.service.impl;
 
-import com.example.art.controller.dto.AssemblyUnitDto;
-import com.example.art.controller.dto.PartDto;
 import com.example.art.exception.ProductAlreadyExistsException;
 import com.example.art.controller.dto.ProductDto;
-import com.example.art.domain.AssemblyUnit;
-import com.example.art.domain.Part;
 import com.example.art.domain.Product;
 import com.example.art.exception.ProductNotFoundException;
 import com.example.art.mapper.ProductMapper;
-import com.example.art.repository.AssemblyUnitRepository;
-import com.example.art.repository.PartRepository;
 import com.example.art.repository.ProductRepository;
 import com.example.art.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,8 +23,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto saveProduct(ProductDto productDto) {
-        if (productRepository.findByDesignation(productDto.getDesignation()).isPresent())
-            throw new ProductAlreadyExistsException("Product already exists");
+        if (productRepository.findByDesignation(productDto.getDesignation()).isPresent() &&
+                productRepository.findByVersionDate(productDto.getVersionDate()).isPresent()) {
+            throw new ProductAlreadyExistsException("Product with the current version date already exists");
+        }
 
         Product productSave = productRepository.save(ProductMapper.toProductEntity(productDto));
         return ProductMapper.toProductDto(productSave);
