@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,9 +49,42 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto getByDesignation(String designation) {
+    public List<ProductDto> getByDesignation(String designation) {
         Optional<Product> product = productRepository.findByDesignation(designation);
-        if(product.isEmpty()) throw new ProductNotFoundException("Product with designation " + designation + " not found");
-        return ProductMapper.toProductDto(product.get());
+        if(product.isEmpty())
+            throw new ProductNotFoundException("Product with designation " + designation + " not found");
+        List<Product> productList = productRepository.findAllByDesignation(designation);
+        return productList.stream()
+                .map(ProductMapper::toProductDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDto getByDesignationAndVersionDate(String designation, int versionDate) {
+        Optional<Product> productOptional = productRepository.findByDesignation(designation);
+        if(productOptional.isEmpty())
+            throw new ProductNotFoundException("Product with designation " + designation + " not found");
+        List<Product> productList = productRepository.findAllByDesignation(designation);
+        productList.sort(Comparator.comparingInt(Product::getVersionDate));
+
+        Product selectedProduct = getProduct(designation, versionDate, productList);
+
+        return ProductMapper.toProductDto(selectedProduct);
+    }
+
+    private Product getProduct(String designation, int versionDate, List<Product> productList) {
+        Product selectedProduct = null;
+        for (Product product : productList) {
+            if (product.getVersionDate() <= versionDate) {
+                selectedProduct = product;
+            } else {
+                break;
+            }
+        }
+
+        if (selectedProduct == null)
+            throw new ProductNotFoundException("Product with designation " + designation +
+                    " and versionDate less or equal to " + versionDate + " not found");
+        return selectedProduct;
     }
 }

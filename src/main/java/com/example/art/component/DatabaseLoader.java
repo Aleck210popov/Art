@@ -73,7 +73,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private Part createPart(AssemblyUnit assemblyUnit, Random random) {
         Part part = new Part();
-        part.setDesignation("Деталь." + random.nextInt(1000000) + ".00" + random.nextInt(10));
+        part.setDesignation("ЖБИК." + random.nextInt(1000000) + ".00" + random.nextInt(10));
         part.setName(PART_NAMES[random.nextInt(PART_NAMES.length)]);
         part.setQuantity(random.nextInt(301));
         part.setLevel(3);

@@ -26,7 +26,11 @@ public class ProductController {
         return productService.getById(id);
     }
     @GetMapping("/products/designation/{designation}")
-    public ProductDto getByDesignation(@PathVariable String designation) {
+    public List<ProductDto> getByDesignation(@PathVariable String designation) {
         return productService.getByDesignation(designation);
+    }
+    @GetMapping("/products/designation/{designation}/version/{versionDate}")
+    public ProductDto getByDesignationAndVersionDate(@PathVariable String designation, @PathVariable int versionDate) {
+        return productService.getByDesignationAndVersionDate(designation, versionDate);
     }
 }

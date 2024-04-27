@@ -11,5 +11,6 @@ public interface ProductService {
     ProductDto saveProduct(ProductDto productDto);
     List<ProductDto> getAll();
     ProductDto getById(long id);
-    ProductDto getByDesignation(String designation);
+    List<ProductDto> getByDesignation(String designation);
+    ProductDto getByDesignationAndVersionDate(String designation,int versionDate);
 }
