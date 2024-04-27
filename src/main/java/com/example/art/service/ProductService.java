@@ -13,4 +13,5 @@ public interface ProductService {
     ProductDto getById(long id);
     List<ProductDto> getByDesignation(String designation);
     ProductDto getByDesignationAndVersionDate(String designation,int versionDate);
+    String[][] getForm(String designation,int versionDate);
 }

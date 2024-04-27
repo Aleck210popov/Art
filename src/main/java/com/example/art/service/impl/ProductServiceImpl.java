@@ -71,7 +71,6 @@ public class ProductServiceImpl implements ProductService {
 
         return ProductMapper.toProductDto(selectedProduct);
     }
-
     private Product getProduct(String designation, int versionDate, List<Product> productList) {
         Product selectedProduct = null;
         for (Product product : productList) {
@@ -87,4 +86,53 @@ public class ProductServiceImpl implements ProductService {
                     " and versionDate less or equal to " + versionDate + " not found");
         return selectedProduct;
     }
+
+
+    @Override
+    public String[][] getForm(String designation,int versionDate) {
+        Optional<Product> productOptional = productRepository.findByDesignation(designation);
+        if(productOptional.isEmpty())
+            throw new ProductNotFoundException("Product with designation " + designation + " not found");
+        List<Product> productList = productRepository.findAllByDesignation(designation);
+        productList.sort(Comparator.comparingInt(Product::getVersionDate));
+
+        Product selectedProduct = getProduct(designation, versionDate, productList);
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 5; j++) {
+                
+            }
+
+        }
+
+        return null;
+
+//        Optional<Product> productOptional = productRepository.findByDesignation(designation);
+//        if (productOptional.isEmpty()) {
+//            throw new ProductNotFoundException("Product with designation " + designation + " not found");
+//        }
+//
+//        List<Product> productList = productRepository.findAllByDesignation(designation);
+//        productList.sort(Comparator.comparingInt(Product::getVersionDate));
+//
+//        Product selectedProduct = getProduct(designation, versionDate, productList);
+//
+//        List<String[]> form = new ArrayList<>();
+//
+//        for (AssemblyUnit assemblyUnit : selectedProduct.getAssembliesUnits()) {
+//            form.add(new String[]{selectedProduct.getDesignation(), assemblyUnit.getDesignation(), assemblyUnit.getDesignation()});
+//            for (Part part : assemblyUnit.getParts()) {
+//                form.add(new String[]{selectedProduct.getDesignation(), assemblyUnit.getDesignation(), part.getDesignation()});
+//            }
+//        }
+//
+//        String[][] formArray = form.toArray(new String[0][]);
+//        // Выводим результат на консоль
+//        for (String[] row : formArray) {
+//            System.out.println(Arrays.toString(row));
+//        }
+//
+//        return formArray;
+    }
+
 }
