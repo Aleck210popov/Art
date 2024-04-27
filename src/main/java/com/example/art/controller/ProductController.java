@@ -33,4 +33,9 @@ public class ProductController {
     public ProductDto getByDesignationAndVersionDate(@PathVariable String designation, @PathVariable int versionDate) {
         return productService.getByDesignationAndVersionDate(designation, versionDate);
     }
+    @GetMapping("/products/form/designation/{designation}/version/{versionDate}")
+    public String[][] getForm(@PathVariable String designation, @PathVariable int versionDate) {
+        return productService.getForm(designation, versionDate);
+    }
+
 }

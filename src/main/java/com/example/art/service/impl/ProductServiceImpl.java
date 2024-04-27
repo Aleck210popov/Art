@@ -1,5 +1,6 @@
 package com.example.art.service.impl;
 
+import com.example.art.domain.AssemblyUnit;
 import com.example.art.exception.ProductAlreadyExistsException;
 import com.example.art.controller.dto.ProductDto;
 import com.example.art.domain.Product;
@@ -97,15 +98,25 @@ public class ProductServiceImpl implements ProductService {
         productList.sort(Comparator.comparingInt(Product::getVersionDate));
 
         Product selectedProduct = getProduct(designation, versionDate, productList);
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 5; j++) {
-                
+        int length = 1;
+        if (selectedProduct.getAssembliesUnits()!=null) {
+            length+=selectedProduct.getAssembliesUnits().size();
+        }
+        List<AssemblyUnit> assemblyUnitList = selectedProduct.getAssembliesUnits();
+        for (AssemblyUnit assemblyUnit : assemblyUnitList) {
+            if (assemblyUnit.getParts()!=null) {
+                length += assemblyUnit.getParts().size();
             }
-
+        }
+        String[][] form = new String[3][length];
+        for (int i = 0; i < 3; i++) {
+            form[i][0] = selectedProduct.getDesignation();
+            for (int j = 1; j < length; j++) {
+                form[i][j] = String.valueOf(i+j);
+            }
         }
 
-        return null;
+        return form;
 
 //        Optional<Product> productOptional = productRepository.findByDesignation(designation);
 //        if (productOptional.isEmpty()) {

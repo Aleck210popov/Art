@@ -26,7 +26,7 @@ public class DatabaseLoader implements CommandLineRunner {
         try {
             Random random = new Random();
 
-            for (int i = 0; i < 100; i++) { // TODO: 10 млн
+            for (int i = 0; i < 10; i++) { // TODO: 10 млн
                 Product product = createProduct(random);
                 startProgramService.saveProduct(product);
 
