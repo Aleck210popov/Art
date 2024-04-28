@@ -104,6 +104,19 @@ public class ProductServiceImpl implements ProductService {
 
         Map<String, Integer> quantitiesMap = new HashMap<>();
 
+        putQuantitiesMap(quantitiesMap, selectedProduct);
+        processMap(quantitiesMap, selectedProduct, form);
+
+//        quantitiesMap.forEach((key, value) -> System.out.println(key + " " + value));
+//
+        //        for (String[] row : formArray) {
+//            System.out.println(Arrays.toString(row));
+//        }
+
+        return form.toArray(new String[0][]);
+    }
+
+    private void putQuantitiesMap(Map<String, Integer> quantitiesMap, Product selectedProduct) {
         quantitiesMap.put(selectedProduct.getDesignation(), selectedProduct.getQuantity());
 
         for (AssemblyUnit assemblyUnit : selectedProduct.getAssembliesUnits()) {
@@ -125,8 +138,9 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
-        quantitiesMap.forEach((key, value) -> System.out.println(key + " " + value));
+    }
 
+    private void processMap(Map<String, Integer> quantitiesMap, Product selectedProduct, List<String[]> form) {
         form.add(new String[]{selectedProduct.getDesignation(),
                 selectedProduct.getDesignation(),
                 selectedProduct.getDesignation(),
@@ -154,19 +168,6 @@ public class ProductServiceImpl implements ProductService {
                         String.valueOf(part.getQuantity())});
             }
         }
-
-        String[][] formArray = form.toArray(new String[0][]);
-        // Выводим результат на консоль
-        for (String[] row : formArray) {
-            System.out.println(Arrays.toString(row));
-        }
-
-        return formArray;
-    }
-
-    private Map<String, Integer> processMap(Map<String, Integer> quantitiesMap, int quantity) {
-
-        return null;
     }
 
 }

@@ -22,6 +22,7 @@ public class DatabaseLoader implements CommandLineRunner {
         loadInitialData();
     }
 
+
     private void loadInitialData() {
         try {
             Random random = new Random();
