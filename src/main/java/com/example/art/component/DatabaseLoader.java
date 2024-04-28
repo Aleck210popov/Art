@@ -52,7 +52,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private Product createProduct(Random random) {
         Product product = new Product();
-        product.setDesignation("ИБПШ." + random.nextInt(1000000) + ".00" + random.nextInt(10));
+        product.setDesignation("ИБПШ." + (random.nextInt(1000000) + 100000) + ".00" + random.nextInt(10));
         product.setName(PRODUCT_NAMES[random.nextInt(PRODUCT_NAMES.length)]);
         product.setQuantity(random.nextInt(11));
         product.setLevel(1);
@@ -62,7 +62,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private AssemblyUnit createAssemblyUnit(Product product, Random random) {
         AssemblyUnit assemblyUnit = new AssemblyUnit();
-        assemblyUnit.setDesignation("ЖБИК." + random.nextInt(1000000) + ".00" + random.nextInt(10));
+        assemblyUnit.setDesignation("ЖБИК." + (random.nextInt(1000000) + 100000) + ".00" + random.nextInt(10));
         assemblyUnit.setName(ASSEMBLY_UNIT_NAMES[random.nextInt(ASSEMBLY_UNIT_NAMES.length)]);
         assemblyUnit.setQuantity(random.nextInt(301));
         assemblyUnit.setLevel(2);
@@ -73,7 +73,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private Part createPart(AssemblyUnit assemblyUnit, Random random) {
         Part part = new Part();
-        part.setDesignation("ЖБИК." + random.nextInt(1000000) + ".00" + random.nextInt(10));
+        part.setDesignation("ЖБИК." + (random.nextInt(1000000) + 100000) + ".00" + random.nextInt(10));
         part.setName(PART_NAMES[random.nextInt(PART_NAMES.length)]);
         part.setQuantity(random.nextInt(301));
         part.setLevel(3);

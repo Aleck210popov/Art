@@ -1,6 +1,7 @@
 package com.example.art.service.impl;
 
 import com.example.art.domain.AssemblyUnit;
+import com.example.art.domain.Part;
 import com.example.art.exception.ProductAlreadyExistsException;
 import com.example.art.controller.dto.ProductDto;
 import com.example.art.domain.Product;
@@ -12,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -91,59 +90,59 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String[][] getForm(String designation,int versionDate) {
-        Optional<Product> productOptional = productRepository.findByDesignation(designation);
-        if(productOptional.isEmpty())
-            throw new ProductNotFoundException("Product with designation " + designation + " not found");
-        List<Product> productList = productRepository.findAllByDesignation(designation);
-        productList.sort(Comparator.comparingInt(Product::getVersionDate));
-
-        Product selectedProduct = getProduct(designation, versionDate, productList);
-        int length = 1;
-        if (selectedProduct.getAssembliesUnits()!=null) {
-            length+=selectedProduct.getAssembliesUnits().size();
-        }
-        List<AssemblyUnit> assemblyUnitList = selectedProduct.getAssembliesUnits();
-        for (AssemblyUnit assemblyUnit : assemblyUnitList) {
-            if (assemblyUnit.getParts()!=null) {
-                length += assemblyUnit.getParts().size();
-            }
-        }
-        String[][] form = new String[3][length];
-        for (int i = 0; i < 3; i++) {
-            form[i][0] = selectedProduct.getDesignation();
-            for (int j = 1; j < length; j++) {
-                form[i][j] = String.valueOf(i+j);
-            }
-        }
-
-        return form;
-
 //        Optional<Product> productOptional = productRepository.findByDesignation(designation);
-//        if (productOptional.isEmpty()) {
+//        if(productOptional.isEmpty())
 //            throw new ProductNotFoundException("Product with designation " + designation + " not found");
-//        }
-//
 //        List<Product> productList = productRepository.findAllByDesignation(designation);
 //        productList.sort(Comparator.comparingInt(Product::getVersionDate));
 //
 //        Product selectedProduct = getProduct(designation, versionDate, productList);
-//
-//        List<String[]> form = new ArrayList<>();
-//
-//        for (AssemblyUnit assemblyUnit : selectedProduct.getAssembliesUnits()) {
-//            form.add(new String[]{selectedProduct.getDesignation(), assemblyUnit.getDesignation(), assemblyUnit.getDesignation()});
-//            for (Part part : assemblyUnit.getParts()) {
-//                form.add(new String[]{selectedProduct.getDesignation(), assemblyUnit.getDesignation(), part.getDesignation()});
+//        int length = 1;
+//        if (selectedProduct.getAssembliesUnits()!=null) {
+//            length+=selectedProduct.getAssembliesUnits().size();
+//        }
+//        List<AssemblyUnit> assemblyUnitList = selectedProduct.getAssembliesUnits();
+//        for (AssemblyUnit assemblyUnit : assemblyUnitList) {
+//            if (assemblyUnit.getParts()!=null) {
+//                length += assemblyUnit.getParts().size();
+//            }
+//        }
+//        String[][] form = new String[length][3];
+//        for (int i = 0; i < length; i++) {
+//            form[i][0] = selectedProduct.getDesignation();
+//            for (int j = 1; j < 3; j++) {
+//                form[i][j] = String.valueOf(i+j);
 //            }
 //        }
 //
-//        String[][] formArray = form.toArray(new String[0][]);
-//        // Выводим результат на консоль
-//        for (String[] row : formArray) {
-//            System.out.println(Arrays.toString(row));
-//        }
-//
-//        return formArray;
+//        return form;
+
+        Optional<Product> productOptional = productRepository.findByDesignation(designation);
+        if (productOptional.isEmpty()) {
+            throw new ProductNotFoundException("Product with designation " + designation + " not found");
+        }
+
+        List<Product> productList = productRepository.findAllByDesignation(designation);
+        productList.sort(Comparator.comparingInt(Product::getVersionDate));
+
+        Product selectedProduct = getProduct(designation, versionDate, productList);
+
+        List<String[]> form = new ArrayList<>();
+
+        for (AssemblyUnit assemblyUnit : selectedProduct.getAssembliesUnits()) {
+            form.add(new String[]{selectedProduct.getDesignation(), assemblyUnit.getDesignation(), assemblyUnit.getDesignation()});
+            for (Part part : assemblyUnit.getParts()) {
+                form.add(new String[]{selectedProduct.getDesignation(), assemblyUnit.getDesignation(), part.getDesignation()});
+            }
+        }
+
+        String[][] formArray = form.toArray(new String[0][]);
+        // Выводим результат на консоль
+        for (String[] row : formArray) {
+            System.out.println(Arrays.toString(row));
+        }
+
+        return formArray;
     }
 
 }
