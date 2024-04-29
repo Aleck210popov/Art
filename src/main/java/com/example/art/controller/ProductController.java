@@ -21,14 +21,14 @@ public class ProductController {
     public List<ProductDto> getAllUsers() {
         return productService.getAll();
     }
-    @GetMapping("/products/id/{id}")
-    public ProductDto getById(@PathVariable long id) {
-        return productService.getById(id);
-    }
-    @GetMapping("/products/designation/{designation}")
-    public List<ProductDto> getByDesignation(@PathVariable String designation) {
-        return productService.getByDesignation(designation);
-    }
+//    @GetMapping("/products/id/{id}")
+//    public ProductDto getById(@PathVariable long id) {
+//        return productService.getById(id);
+//    }
+//    @GetMapping("/products/designation/{designation}")
+//    public List<ProductDto> getByDesignation(@PathVariable String designation) {
+//        return productService.getByDesignation(designation);
+//    }
     @GetMapping("/products/designation/{designation}/version/{versionDate}")
     public ProductDto getByDesignationAndVersionDate(@PathVariable String designation, @PathVariable int versionDate) {
         return productService.getByDesignationAndVersionDate(designation, versionDate);
