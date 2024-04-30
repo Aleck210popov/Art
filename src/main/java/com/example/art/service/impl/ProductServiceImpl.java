@@ -88,6 +88,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+
+    @Override
+    public void deleteProduct(long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if(productOptional.isEmpty())
+            throw new ProductNotFoundException("Product with ID " + id + " not found");
+        productRepository.delete(productOptional.get());
+    }
+
+    @Override
+    public ProductDto updateProduct(long id, ProductDto productDto) {
+        return null;
+    }
+
+
+
+
+
+
+
     @Override
     public String[][] getForm(String designation,int versionDate) {
         Optional<Product> productOptional = productRepository.findByDesignation(designation);
@@ -106,12 +126,6 @@ public class ProductServiceImpl implements ProductService {
 
         putQuantitiesMap(quantitiesMap, selectedProduct);
         processMap(quantitiesMap, selectedProduct, form);
-
-//        quantitiesMap.forEach((key, value) -> System.out.println(key + " " + value));
-//
-        //        for (String[] row : formArray) {
-//            System.out.println(Arrays.toString(row));
-//        }
 
         return form.toArray(new String[0][]);
     }

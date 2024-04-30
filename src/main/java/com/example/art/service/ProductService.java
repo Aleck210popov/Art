@@ -1,9 +1,6 @@
 package com.example.art.service;
 
 import com.example.art.controller.dto.ProductDto;
-import com.example.art.domain.AssemblyUnit;
-import com.example.art.domain.Part;
-import com.example.art.domain.Product;
 
 import java.util.List;
 
@@ -14,4 +11,8 @@ public interface ProductService {
     List<ProductDto> getByDesignation(String designation);
     ProductDto getByDesignationAndVersionDate(String designation,int versionDate);
     String[][] getForm(String designation,int versionDate);
+
+    void deleteProduct(long id);
+
+    ProductDto updateProduct(long id, ProductDto productDto);
 }
