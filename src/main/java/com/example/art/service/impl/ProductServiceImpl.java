@@ -5,6 +5,7 @@ import com.example.art.domain.Part;
 import com.example.art.exception.ProductAlreadyExistsException;
 import com.example.art.controller.dto.ProductDto;
 import com.example.art.domain.Product;
+import com.example.art.exception.ProductFieldException;
 import com.example.art.exception.ProductNotFoundException;
 import com.example.art.mapper.ProductMapper;
 import com.example.art.repository.ProductRepository;
@@ -99,7 +100,30 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto updateProduct(long id, ProductDto productDto) {
-        return null;
+        Optional<Product> productOptional = productRepository.findById(id);
+        if(productOptional.isEmpty())
+            throw new ProductNotFoundException("Product with ID " + id + " not found");
+
+
+        Product productClient = ProductMapper.toProductEntity(productDto);
+        if (productClient.getDesignation() == null || productClient.getName() == null) {
+            throw new ProductFieldException("Error in product field");
+        }
+        Product existingProduct = productOptional.get();
+        Product updatedProduct = ProductMapper.toProductEntity(productDto);
+        // TODO : нужно проверить id с клиента
+        updatedProduct.setId(existingProduct.getId());
+
+        existingProduct.setDesignation(updatedProduct.getDesignation());
+        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setQuantity(updatedProduct.getQuantity());
+        existingProduct.setLevel(updatedProduct.getLevel());
+        existingProduct.setVersionDate(updatedProduct.getVersionDate());
+        existingProduct.setAssembliesUnits(updatedProduct.getAssembliesUnits());
+
+        Product savedProduct = productRepository.save(existingProduct);
+
+        return ProductMapper.toProductDto(savedProduct);
     }
 
 

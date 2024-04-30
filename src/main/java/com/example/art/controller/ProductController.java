@@ -26,7 +26,7 @@ public class ProductController {
     public ProductDto getByDesignationAndVersionDate(@PathVariable String designation, @PathVariable int versionDate) {
         return productService.getByDesignationAndVersionDate(designation, versionDate);
     }
-    @PutMapping("/products/{id}")
+    @PutMapping("/products/id/{id}")
     public ProductDto update (@PathVariable long id, @RequestBody ProductDto productDto) {
         return productService.updateProduct(id, productDto);
     }
