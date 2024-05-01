@@ -5,6 +5,7 @@ import com.example.art.domain.Product;
 import com.example.art.exception.ProductAlreadyExistsException;
 import com.example.art.exception.ProductFieldException;
 import com.example.art.exception.ProductNotFoundException;
+import com.example.art.exception.ProductWithCurrentVersionDateNotFoundException;
 import com.example.art.mapper.ProductMapper;
 import com.example.art.repository.ProductRepository;
 import com.example.art.service.ProductService;
@@ -35,14 +36,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto getByDesignationAndVersionDate(String designation, int versionDate) {
         Optional<Product> productOptional = productRepository.findByDesignation(designation);
-        if(productOptional.isEmpty())
-            throw new ProductNotFoundException("Product with designation " + designation + " not found");
-        List<Product> productList = productRepository.findAllByDesignation(designation);
-        productList.sort(Comparator.comparingInt(Product::getVersionDate));
+        try {
+            if(productOptional.isEmpty())
+                throw new ProductNotFoundException("Product with designation " + designation + " not found");
+            List<Product> productList = productRepository.findAllByDesignation(designation);
+            productList.sort(Comparator.comparingInt(Product::getVersionDate));
 
-        Product selectedProduct = getProduct(designation, versionDate, productList);
+            Product selectedProduct = getProduct(designation, versionDate, productList);
 
-        return ProductMapper.toProductDto(selectedProduct);
+            return ProductMapper.toProductDto(selectedProduct);
+        } catch (ProductNotFoundException | ProductWithCurrentVersionDateNotFoundException ex) {
+            ProductDto errorResponse = new ProductDto();
+            errorResponse.setErrorMessage(ex.getMessage());
+            return errorResponse;
+        }
     }
     private Product getProduct(String designation, int versionDate, List<Product> productList) {
         Product selectedProduct = null;
@@ -55,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (selectedProduct == null)
-            throw new ProductNotFoundException("Product with designation " + designation +
+            throw new ProductWithCurrentVersionDateNotFoundException("Product with designation " + designation +
                     " and versionDate less or equal to " + versionDate + " not found");
         return selectedProduct;
     }

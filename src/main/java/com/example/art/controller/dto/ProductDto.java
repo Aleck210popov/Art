@@ -28,4 +28,6 @@ public class ProductDto {
     private int versionDate;
 
     private List<AssemblyUnitDto> assembliesUnitsDto;
+
+    private String errorMessage;
 }
