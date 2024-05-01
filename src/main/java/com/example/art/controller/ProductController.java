@@ -5,8 +5,6 @@ import com.example.art.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/products")
@@ -17,7 +15,6 @@ public class ProductController {
 
     @PostMapping()
     public ProductDto addProduct(@RequestBody ProductDto productDto) {
-        System.out.println("эоэоэоэ");
         return productService.saveProduct(productDto);
     }
 

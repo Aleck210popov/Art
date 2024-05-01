@@ -1,10 +1,8 @@
 package com.example.art.service.impl;
 
-import com.example.art.domain.AssemblyUnit;
-import com.example.art.domain.Part;
-import com.example.art.exception.ProductAlreadyExistsException;
 import com.example.art.controller.dto.ProductDto;
 import com.example.art.domain.Product;
+import com.example.art.exception.ProductAlreadyExistsException;
 import com.example.art.exception.ProductFieldException;
 import com.example.art.exception.ProductNotFoundException;
 import com.example.art.mapper.ProductMapper;
@@ -13,15 +11,15 @@ import com.example.art.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepository;
 
+    private final ProductRepository productRepository;
 
     @Override
     public ProductDto saveProduct(ProductDto productDto) {
