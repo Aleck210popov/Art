@@ -27,7 +27,7 @@ public class DatabaseLoader implements CommandLineRunner {
         try {
             Random random = new Random();
 
-            for (int i = 0; i < 100; i++) { // TODO: 10 млн
+            for (int i = 0; i < 10; i++) { // TODO: 10 млн
                 Product product = createProduct(random);
                 startProgramService.saveProduct(product);
 
@@ -55,7 +55,7 @@ public class DatabaseLoader implements CommandLineRunner {
         Product product = new Product();
         product.setDesignation("ИБПШ." + (random.nextInt(1000000) + 100000) + ".00" + random.nextInt(10));
         product.setName(PRODUCT_NAMES[random.nextInt(PRODUCT_NAMES.length)]);
-        product.setQuantity(random.nextInt(11));
+        product.setQuantity(random.nextInt(11) + 1);
         product.setLevel(1);
         product.setVersionDate(random.nextInt(75) + 1950);
         return product;

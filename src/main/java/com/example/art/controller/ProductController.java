@@ -9,47 +9,31 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
 
 
-    @DeleteMapping("/products/id/{id}")
-    public void deleteProduct (@PathVariable long id) {
-        productService.deleteProduct(id);
-    }
-    @PostMapping("/products")
+
+    @PostMapping()
     public ProductDto addProduct(@RequestBody ProductDto productDto) {
+        System.out.println("эоэоэоэ");
         return productService.saveProduct(productDto);
     }
-    @GetMapping("/products/designation/{designation}/version/{versionDate}")
-    public ProductDto getByDesignationAndVersionDate(@PathVariable String designation, @PathVariable int versionDate) {
-        return productService.getByDesignationAndVersionDate(designation, versionDate);
-    }
-    @PutMapping("/products/id/{id}")
-    public ProductDto update (@PathVariable long id, @RequestBody ProductDto productDto) {
+
+    @PutMapping("/id/{id}")
+    public ProductDto updateProduct (@PathVariable long id, @RequestBody ProductDto productDto) {
         return productService.updateProduct(id, productDto);
     }
 
+    @DeleteMapping("/id/{id}")
+    public void deleteProduct (@PathVariable long id) {
+        productService.deleteProduct(id);
+    }
 
-
-//    @GetMapping("/products")
-//    public List<ProductDto> getAllUsers() {
-//        return productService.getAll();
-//    }
-//    @GetMapping("/products/id/{id}")
-//    public ProductDto getById(@PathVariable long id) {
-//        return productService.getById(id);
-//    }
-//    @GetMapping("/products/designation/{designation}")
-//    public List<ProductDto> getByDesignation(@PathVariable String designation) {
-//        return productService.getByDesignation(designation);
-//    }
-
-//    @GetMapping("/products/form/designation/{designation}/version/{versionDate}")
-//    public String[][] getForm(@PathVariable String designation, @PathVariable int versionDate) {
-//        return productService.getForm(designation, versionDate);
-//    }
-
+    @GetMapping("/designation/{designation}/version/{versionDate}")
+    public ProductDto getByDesignationAndVersionDate(@PathVariable String designation, @PathVariable int versionDate) {
+        return productService.getByDesignationAndVersionDate(designation, versionDate);
+    }
 
 }
