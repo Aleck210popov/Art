@@ -1,5 +1,6 @@
-//package com.example.art.testuset.demo;
+//package com.example.art.demo;
 //
+//import com.example.art.domain.Product;
 //import lombok.AllArgsConstructor;
 //import lombok.Builder;
 //import lombok.Data;
@@ -12,11 +13,13 @@
 //@NoArgsConstructor
 //@AllArgsConstructor
 //@Entity
-//@Table(name = "ppart")
-//public class Ppart {
+//@Table(name = "aassembly_unit")
+//public class AassemblyUnit {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
+//
+//
 //
 //    @Column (name = "designation")
 //    private String designation;
@@ -32,5 +35,5 @@
 //
 //    @ManyToOne
 //    @JoinColumn(name = "product_id")
-//    private Pproduct pproduct;
+//    private Product product;
 //}

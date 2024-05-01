@@ -1,16 +1,27 @@
+# Конфигурационный файл
 spring:
 
+  # Подключение к H2 бд через jdbc
   datasource:
-    url: jdbc:h2:mem:art
+    url: jdbc:postgresql://localhost:5432/art
+    username: postgres
+    password: adminSQLpopov
 
-  h2:
-    console:
-      enabled: true
+  # Включение консоли
+#  h2:
+#    console:
+#      #enabled: false
+#      enabled: true
 
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    #Автогенерация схемы hibernate
+    #generate-ddl: false
     generate-ddl: true
 
     hibernate:
+      #ddl-auto: none
       ddl-auto: create-drop
 
+    # Показываем запросы
     show-sql: true

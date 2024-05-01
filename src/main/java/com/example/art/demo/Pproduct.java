@@ -1,25 +1,24 @@
-//package com.example.art.testuset.demo;
+//package com.example.art.demo;
 //
-//import com.example.art.domain.Product;
+//import com.example.art.domain.AssemblyUnit;
 //import lombok.AllArgsConstructor;
 //import lombok.Builder;
 //import lombok.Data;
 //import lombok.NoArgsConstructor;
 //
 //import javax.persistence.*;
+//import java.util.List;
 //
 //@Data
 //@Builder
 //@NoArgsConstructor
 //@AllArgsConstructor
 //@Entity
-//@Table(name = "aassembly_unit")
-//public class AassemblyUnit {
+//@Table(name = "pproduct")
+//public class Pproduct {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
-//
-//
 //
 //    @Column (name = "designation")
 //    private String designation;
@@ -33,7 +32,6 @@
 //    @Column (name = "level")
 //    private int level;
 //
-//    @ManyToOne
-//    @JoinColumn(name = "product_id")
-//    private Product product;
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+//    private List<AssemblyUnit> assembliesUnits;
 //}
